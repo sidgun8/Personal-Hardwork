@@ -1,0 +1,50 @@
+# SAiDL Core ML — Hydra defaults (composed into notebook `Config`).
+# Override from Jupyter: set HYDRA_OVERRIDES env var or edit list in notebook cell.
+defaults:
+  - _self_
+
+wandb:
+  # Fresh project avoids mixing Hydra-era runs with older scratch experiments (optional).
+  # Point back to 'wikitext2-attention-variants' if you want one unified dashboard.
+  project: wikitext2-attention-hydra
+  entity: null
+  # Same project + different group → separate runs in the W&B UI without a new project
+  group: saidl_core_ml
+  # Merged into every run's tags alongside per-run tags from the notebook
+  tags:
+    - hydra
+    - saidl-core-ml
+
+dataset_name: wikitext
+dataset_config: wikitext-2-raw-v1
+tokenizer_name: gpt2
+vocab_size: 50257
+
+d_model: 512
+n_heads: 8
+n_kv_heads: 2
+n_layers: 8
+d_ff: 2048
+dropout: 0.1
+
+positional_encoding_type: learned
+block_type: standard_transformer_block
+local_window_size: 256
+sparse_block_size: 64
+relative_max_distance: 128
+max_position_embeddings: 8192
+conv_kernel_size: 7
+conv_groups: 1
+alibi_slope_scale: 1.0
+
+context_len: 1024
+batch_size: 4
+epochs: 1
+lr: 3.0e-4
+weight_decay: 0.1
+grad_clip: 1.0
+eval_every_steps: 250
+max_eval_batches: 100
+
+attention_type: scaled_dot_product
+seed: 42
